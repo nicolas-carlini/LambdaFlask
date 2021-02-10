@@ -36,6 +36,9 @@ def create_user():
 
             user_data = {'id': generate_uid(), 'fullname': form.username.data, 'email': form.email.data,
                          'password': hash_password(form.password.data)}
+            if table.get_item(Key={'email': form.email.data}):
+                flash('User with email address already exists', 'danger')
+                return redirect('/Prod/register')
 
             table.put_item(Item=user_data)
             flash('user has been created', 'success')
