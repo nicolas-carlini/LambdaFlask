@@ -1,9 +1,10 @@
 import json
 import boto3
-import uuid
-import hashlib
+
 import flask
 import SendgridService
+
+from helpers import hash_password, generate_uid
 from forms import RegistrationForm, LoginForm, ResetPasswordForm, RequestResetForm
 from flask_lambda import FlaskLambda
 from flask import Flask, request, render_template, url_for, redirect, flash, session
@@ -12,23 +13,9 @@ from flask_wtf.csrf import CSRFProtect
 
 app = FlaskLambda(__name__)
 app.config.update(SECRET_KEY='kikakikakikakika')
-# api_bp = flask.Blueprint("api", __name__, url_prefix="/Prod/")
 csrf = CSRFProtect(app)
 ddb = boto3.resource('dynamodb')
 table = ddb.Table('userdatabase')
-
-
-def hash_password(pswd):
-    crypt = hashlib.md5()
-    crypt.update(bytes(pswd, encoding='utf-8'))
-    hashed = (crypt.hexdigest())
-
-    return hashed
-
-
-def generate_uid():
-    id = str(uuid.uuid1())
-    return id
 
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -51,7 +38,8 @@ def create_user():
                          'password': hash_password(form.password.data)}
 
             table.put_item(Item=user_data)
-            return redirect('/Prod/home')
+            flash('user has been created', 'success')
+            return redirect('/Prod/login')
         return render_template('register.html', title='Register', form=form)
 
 
@@ -113,7 +101,6 @@ def reset_pass():
         response = table.get_item(Key={'email': email})
         user = response['Item']
         user['password'] = hash_password(form.password.data)
-        print(user)
         table.put_item(Item=user)
     return redirect('/Prod/login')
 

@@ -27,10 +27,25 @@ To use the SAM CLI, you need the following tools.
 * [Python 3 installed](https://www.python.org/downloads/)
 * Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
 
-To build and deploy your application for the first time, run the following in your shell:
+You will need to install configure AWS SAM client before deploying application:
 
 ```bash
-sam build --use-container
+pip install awscli
+
+```
+
+Set your AWS Access and Private key:
+
+```bash
+aws configure
+
+```
+
+To build and deploy your application for the first time, run the following in your shell:
+
+
+```bash
+
 sam deploy --guided
 ```
 

@@ -2,9 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   sample-api
-
   Sample SAM Template for sample-api
-
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -36,22 +34,17 @@ Resources:
           Properties:
             Path: /home
             Method: get
-        CreateUser:
+        RegisterUser1:
           Type: Api
           Properties:
             Path: /register
             Method: get
-        Kika:
+        RegisterUser2:
           Type: Api
           Properties:
             Path: /register
             Method: post
-        ListUser:
-          Type: Api
-          Properties:
-            Path: /list
-            Method: get
-        LoginUser:
+        LoginUser1:
           Type: Api
           Properties:
             Path: /login
