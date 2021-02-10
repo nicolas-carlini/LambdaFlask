@@ -11,18 +11,77 @@ Globals:
     Timeout: 3
 
 Resources:
+  UserTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+        PrimaryKey:
+          Name: email
+          Type: String
+        TableName: userdatabase
+
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello_world/
-      Handler: app.lambda_handler
+      CodeUri: flask-api/
+      Handler: app.app
       Runtime: python3.8
+      Policies:
+        - AmazonDynamoDBFullAccess
+#        - DynamoDBCrudPolicy:
+#            TableName:
+#              !Ref UserTable
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /hello
+            Path: /home
             Method: get
+        CreateUser:
+          Type: Api
+          Properties:
+            Path: /register
+            Method: get
+        Kika:
+          Type: Api
+          Properties:
+            Path: /register
+            Method: post
+        ListUser:
+          Type: Api
+          Properties:
+            Path: /list
+            Method: get
+        LoginUser:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: get
+        LoginUser2:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: post
+        ResetPassword1:
+          Type: Api
+          Properties:
+            Path: /reset
+            Method: get
+        ResetPassword2:
+          Type: Api
+          Properties:
+            Path: /reset
+            Method: post
+        PasswordReset1:
+          Type: Api
+          Properties:
+            Path: /password
+            Method: get
+        PasswordReset2:
+          Type: Api
+          Properties:
+            Path: /password
+            Method: post
+
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

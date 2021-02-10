@@ -1,0 +1,7 @@
+requests
+flask-lambda-python36
+boto3
+flask-wtf
+email_validator
+sendgrid
+
