@@ -1,7 +1,8 @@
 import sendgrid
 from sendgrid.helpers.mail import *
 
-sendgrid_api_key = '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'
+'''Add your api_key for email support'''
+sendgrid_api_key = ''
 
 
 def send_email(email):
