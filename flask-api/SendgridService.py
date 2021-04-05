@@ -7,7 +7,7 @@ sendgrid_api_key = ''
 
 def send_email(email):
     sg = sendgrid.SendGridAPIClient(api_key='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')
-    from_email = Email("lazarivic036@gmail.com")
+    from_email = Email("")
     to_email = To(email)
     subject = "Reset your password"
     reset = 'https://tye5zbnac5.execute-api.us-east-2.amazonaws.com/Prod/password'
